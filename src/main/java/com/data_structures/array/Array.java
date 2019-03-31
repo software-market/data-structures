@@ -37,11 +37,12 @@ public class Array {
 	}
 
 	// 增、删、改、查
-	public void add(int e) {
-		if (size == data.length)
-			throw new IllegalArgumentException("Add failed. Array is full");
-		data[size] = e;
-		size++;
+	public void addLast(int e) {
+		add(size, e);
+	}
+
+	public void addFirst(int e) {
+		add(0, e);
 	}
 
 	public void add(int index, int e) {
