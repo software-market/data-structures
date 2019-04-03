@@ -33,7 +33,16 @@ public class Array {
 
 	@Override
 	public String toString() {
-		return Arrays.toString(data);
+		StringBuffer sb = new StringBuffer();
+		sb.append(String.format("Array: size = %d  capacity = %d\n", size, data.length));
+		sb.append("[");
+		for (int i = 0; i < size; i++) {
+			sb.append(data[i]);
+			if (i + 1 == size)
+				return sb.append("]").toString();
+			sb.append(", ");
+		}
+		return null;
 	}
 
 	// 增、删、改、查
@@ -47,7 +56,7 @@ public class Array {
 
 	public void add(int index, int e) {
 		if (index < 0 || index >= data.length)
-			throw new IllegalArgumentException("Add failed. Array is full");
+			throw new IllegalArgumentException("Add failed. index < 0 || index >= data.length");
 		if (size == data.length)
 			throw new IllegalArgumentException("Add failed. Array is full");
 		int temp = size;
@@ -64,5 +73,45 @@ public class Array {
 			}
 		data[temp] = e;
 		size++;
+	}
+
+	public int get(int index) {
+		if (index < 0 || index > size)
+			throw new IllegalArgumentException("Get failed. Index is illegal.");
+		return data[index];
+	}
+
+	public void set(int index, int e) {
+		if (index < 0 || index > size)
+			throw new IllegalArgumentException("Get failed. Index is illegal.");
+		data[index] = e;
+	}
+
+	public boolean contains(int e) {
+		for (int i = 0; i < size; i++) {
+			if (data[i] == e)
+				return true;
+		}
+		return false;
+	}
+
+	public int firstIndexOf(int e) {
+		for (int i = 0; i < size; i++) {
+			if (data[i] == e)
+				return i;
+		}
+		return -1;
+	}
+
+	public void remove(int index) {
+		if (index < 0 || index > size)
+			throw new IllegalArgumentException("Remove failed. Index is illegal.");
+
+		while (index + 1 != size) {
+			data[index] = data[index + 1];
+			index++;
+		}
+		data[index] = 0;
+		size--;
 	}
 }

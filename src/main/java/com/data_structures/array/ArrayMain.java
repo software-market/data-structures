@@ -1,5 +1,9 @@
 package com.data_structures.array;
 
+import com.sun.org.apache.bcel.internal.generic.NEW;
+
+import java.util.ArrayList;
+
 /**
  * @author wu
  * @date 2019/3/31 18:31
@@ -24,5 +28,19 @@ public class ArrayMain {
 			ex.printStackTrace();
 		}
 		System.out.println(array.toString());
+		System.out.println(array.get(0));
+		array.set(0, 111);
+		System.out.println(array.get(0));
+
+		System.out.println(array.contains(10));
+		System.out.println(array.firstIndexOf(10));
+
+		array.remove(9);
+		System.out.println(array);
+		array.set(0, 1);
+		System.out.println(array);
+		array.set(5, 6);
+		array.remove(0);
+		System.out.println(array);
 	}
 }
