@@ -1,13 +1,11 @@
 package com.data_structures.array;
 
-import java.util.Arrays;
-
 /**
  * @author wu
  * @date 2019/3/31 18:31
  */
-public class Array {
-	private int[] data;
+public class Array<E> {
+	private E[] data;
 	private int size;
 
 	public Array() {
@@ -15,7 +13,7 @@ public class Array {
 	}
 
 	public Array(int capacity) {
-		data = new int[capacity];
+		data = (E[]) new Object[capacity];
 		size = 0;
 	}
 
@@ -46,23 +44,24 @@ public class Array {
 	}
 
 	// 增、删、改、查
-	public void addLast(int e) {
+	public void addLast(E e) {
 		add(size, e);
 	}
 
-	public void addFirst(int e) {
+	public void addFirst(E e) {
 		add(0, e);
 	}
 
-	public void add(int index, int e) {
+	public void add(int index, E e) {
 		if (index < 0 || index >= data.length)
 			throw new IllegalArgumentException("Add failed. index < 0 || index >= data.length");
 		if (size == data.length)
-			throw new IllegalArgumentException("Add failed. Array is full");
+//			throw new IllegalArgumentException("Add failed. Array is full");
+			resize(data.length * 2);
 		int temp = size;
 		if (size <= index)
 			while (size != index) {
-				data[size] = 0;
+				data[size] = null;
 				size++;
 				temp = size;
 			}
@@ -75,43 +74,68 @@ public class Array {
 		size++;
 	}
 
-	public int get(int index) {
+	private void resize(int newCapacity) {
+		E[] newData = (E[]) new Object[newCapacity];
+		System.arraycopy(data, 0, newData, 0, data.length);
+		data = newData;
+
+	}
+
+	public E get(int index) {
 		if (index < 0 || index > size)
 			throw new IllegalArgumentException("Get failed. Index is illegal.");
 		return data[index];
 	}
 
-	public void set(int index, int e) {
+	public void set(int index, E e) {
 		if (index < 0 || index > size)
 			throw new IllegalArgumentException("Get failed. Index is illegal.");
 		data[index] = e;
 	}
 
-	public boolean contains(int e) {
+	public boolean contains(E e) {
 		for (int i = 0; i < size; i++) {
-			if (data[i] == e)
+			if (data[i] != null && data[i].equals(e))
 				return true;
 		}
 		return false;
 	}
 
-	public int firstIndexOf(int e) {
+	public int firstIndexOf(E e) {
 		for (int i = 0; i < size; i++) {
-			if (data[i] == e)
+			if (e != null && e.equals(data[i]))
 				return i;
 		}
 		return -1;
 	}
 
-	public void remove(int index) {
+	public E remove(int index) {
 		if (index < 0 || index > size)
 			throw new IllegalArgumentException("Remove failed. Index is illegal.");
 
-		while (index + 1 != size) {
-			data[index] = data[index + 1];
-			index++;
+		E res = data[index];
+		for (int i = index + 1; i < size; i++) {
+			data[i - 1] = data[i];
 		}
-		data[index] = 0;
+		if (size == data.length / 4 && data.length / 2 != 0)
+			resize(data.length / 2);
+
 		size--;
+		return res;
 	}
+
+	public E removeFirst() {
+		return remove(0);
+	}
+
+	public E removeLast() {
+		return remove(size);
+	}
+
+	public void removeElement(E e) {
+		int index = firstIndexOf(e);
+		if (index != -1)
+			remove(index);
+	}
+
 }

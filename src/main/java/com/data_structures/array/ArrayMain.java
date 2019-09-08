@@ -3,6 +3,7 @@ package com.data_structures.array;
 import com.sun.org.apache.bcel.internal.generic.NEW;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author wu
@@ -10,7 +11,7 @@ import java.util.ArrayList;
  */
 public class ArrayMain {
 	public static void main(String[] args) {
-		Array array = new Array();
+		Array<Integer> array = new Array<>();
 		array.addLast(3);
 		array.addFirst(1);
 		array.addLast(4);
@@ -42,5 +43,10 @@ public class ArrayMain {
 		array.set(5, 6);
 		array.remove(0);
 		System.out.println(array);
+
+//		List<Integer> list = new ArrayList<>();
+//
+//		list.add(10,123);
+//		System.out.println(list.size());// ex
 	}
 }
